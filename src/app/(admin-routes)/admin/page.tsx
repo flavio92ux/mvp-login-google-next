@@ -1,15 +1,18 @@
 import { authOptions } from '@/app/api/auth/[...nextauth]/route'
 import ButtonLogout from '@/components/ButtonLogout'
 import { getServerSession } from 'next-auth'
+import { connectDB } from '@/utils/database'
+
+interface ISession {
+  user: {
+    name: string
+    email: string
+    image: string
+  }
+}
 
 export default async function Admin() {
-  interface ISession {
-    user: {
-      name: string
-      email: string
-      image: string
-    }
-  }
+  const db = connectDB()
 
   const session: ISession | null = await getServerSession(authOptions)
 
