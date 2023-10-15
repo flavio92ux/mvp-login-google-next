@@ -1,8 +1,8 @@
-import NextAuth from "next-auth/next"
-import GoogleProvider from "next-auth/providers/google"
-import GitHubProvider from "next-auth/providers/github"
-import Auth0Provider from "next-auth/providers/auth0"
-import { connectDB } from "@/utils/database"
+import NextAuth from 'next-auth/next'
+import GoogleProvider from 'next-auth/providers/google'
+import GitHubProvider from 'next-auth/providers/github'
+import { connectDB } from '@/utils/database'
+import User from '@/models/user'
 
 export const authOptions = {
   providers: [
@@ -12,14 +12,38 @@ export const authOptions = {
     }),
     GitHubProvider({
       clientId: process.env.GITHUB_ID,
-      clientSecret: process.env.GITHUB_SECRET
+      clientSecret: process.env.GITHUB_SECRET,
     }),
-    Auth0Provider({
-      clientId: process.env.AUTH0_CLIENT_ID,
-      clientSecret: process.env.AUTH0_CLIENT_SECRET,
-      issuer: process.env.AUTH0_ISSUER
-    })
-  ]
+  ],
+  callbacks: {
+    async session({ session }) {
+      const sessionUser = await User.findOne({ email: session.user.email })
+
+      return session
+    },
+    async signIn({ profile }) {
+      try {
+        await connectDB()
+
+        const userExist = await User.findOne({ email: profile.email })
+
+        if (!userExist) {
+          await User.create({
+            email: profile.email,
+            name: profile.name,
+            image: profile.picture
+          }) 
+        }
+
+        return true
+      } catch (error) {
+        console.log(error)
+
+        return false
+      }
+    },
+  },
+  secret: process.env.SECRET,
 }
 
 const handler = NextAuth(authOptions)
