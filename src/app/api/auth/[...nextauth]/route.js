@@ -2,6 +2,7 @@ import NextAuth from "next-auth/next"
 import GoogleProvider from "next-auth/providers/google"
 import GitHubProvider from "next-auth/providers/github"
 import Auth0Provider from "next-auth/providers/auth0"
+import { connectDB } from "@/utils/database"
 
 export const authOptions = {
   providers: [
@@ -18,8 +19,7 @@ export const authOptions = {
       clientSecret: process.env.AUTH0_CLIENT_SECRET,
       issuer: process.env.AUTH0_ISSUER
     })
-  ],
-  secret: process.env.SECRET,
+  ]
 }
 
 const handler = NextAuth(authOptions)
