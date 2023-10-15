@@ -19,9 +19,5 @@ export default async function PrivateLayout({ children }: PrivateLayoutProps){
 		redirect('/')
 	}
 
-	return (
-    <html lang="en">
-      <body>{children}</body>
-    </html>
-  )
+	return <>{children}</>
 }
