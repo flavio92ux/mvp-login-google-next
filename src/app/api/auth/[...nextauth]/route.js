@@ -8,28 +8,28 @@ import { PrismaClient } from '@prisma/client'
 import bcrypt from 'bcrypt'
 import User from '@/models/user'
 
-const prisma = new PrismaClient()
+// const prisma = new PrismaClient()
 
 export const authOptions = {
-  adapter: PrismaAdapter(prisma),
+  // adapter: PrismaAdapter(prisma),
   providers: [
-    CredentialsProvider({
-      name: 'credentials',
-      credentials: {
-        username: {
-          label: 'Username',
-          type: 'text',
-          placeholder: 'type your name',
-        },
-        password: {
-          label: 'Password',
-          type: 'password',
-        },
-      },
-      async authorize(credentials) {
-        
-      }
-    }),
+    // CredentialsProvider({
+    //   name: 'credentials',
+    //   credentials: {
+    //     username: {
+    //       label: 'Username',
+    //       type: 'text',
+    //       placeholder: 'type your name',
+    //     },
+    //     password: {
+    //       label: 'Password',
+    //       type: 'password',
+    //     },
+    //   },
+    //   async authorize(credentials) {
+
+    //   }
+    // }),
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
@@ -39,6 +39,9 @@ export const authOptions = {
       clientSecret: process.env.GITHUB_SECRET,
     }),
   ],
+  // session: {
+  //   strategy: 'jwt',
+  // },
   callbacks: {
     async session({ session }) {
       const sessionUser = await User.findOne({ email: session.user.email })
@@ -70,6 +73,7 @@ export const authOptions = {
     },
   },
   secret: process.env.SECRET,
+  // debug: process.env.NODE_ENV === 'development'
 }
 
 const handler = NextAuth(authOptions)

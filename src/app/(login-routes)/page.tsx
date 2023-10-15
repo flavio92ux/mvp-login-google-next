@@ -1,6 +1,7 @@
 'use client'
 
 import LoginButtons from '@/components/LoginButtons'
+import Link from 'next/link'
 
 export default function Home() {
   return (
@@ -10,6 +11,9 @@ export default function Home() {
       <div className='flex items-center justify-center'>
         <LoginButtons />
       </div>
+
+      <Link href="/register">Register Page</Link>
+      <Link href="/login">Login Page</Link>
       
     </main>
   )
