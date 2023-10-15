@@ -10,7 +10,6 @@ interface ISession {
 }
 
 export default async function Admin() {
-
   const session: ISession | null = await getServerSession(authOptions)
 
   return (
