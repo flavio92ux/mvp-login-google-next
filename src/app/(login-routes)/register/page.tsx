@@ -15,8 +15,6 @@ export default function Register() {
   const registerUser = async (e: any) => {
     e.preventDefault()
 
-    console.log(JSON.stringify(data))
-
     const response = await fetch('/api/auth/register', {
       method: 'POST',
       headers: {
@@ -25,10 +23,7 @@ export default function Register() {
       body: JSON.stringify(data)
     })
 
-    console.log(response)
-
     const userInfo = await response.json()
-    console.log(userInfo)
     // router.push('/')
   }
 
