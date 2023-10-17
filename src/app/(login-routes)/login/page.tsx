@@ -1,6 +1,7 @@
 'use client'
 import { useState } from "react"
 import { useRouter } from "next/navigation"
+import { signIn } from "next-auth/react"
 
 export default function LoginPage() {
   const router = useRouter()
@@ -10,8 +11,19 @@ export default function LoginPage() {
     password: '',
   })
 
+  const loginUser = async (e: any) => {
+    e.preventDefault()
+
+    signIn('credentials', {
+      ...data,
+      redirect: false,
+    })
+
+    router.push('/admin')
+  }
+
   return (
-    <form>
+    <form onSubmit={loginUser}>
       <label htmlFor='email'>Email:</label>
       <input type='email' id='email' onChange={(e) => setData({...data, email: e.target.value})} />
 
