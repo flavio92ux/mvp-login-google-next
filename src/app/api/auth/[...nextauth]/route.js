@@ -1,11 +1,9 @@
 import NextAuth from 'next-auth/next'
 import GoogleProvider from 'next-auth/providers/google'
 import GitHubProvider from 'next-auth/providers/github'
-import { connectDB } from '@/utils/database'
 import CredentialsProvider from 'next-auth/providers/credentials'
 import { PrismaAdapter } from '@auth/prisma-adapter'
 import { PrismaClient } from '@prisma/client'
-import User from '@/models/user'
 import bcrypt from 'bcrypt'
 
 const prisma = new PrismaClient()
@@ -31,7 +29,7 @@ export const authOptions = {
         }
       },
       async authorize(credentials) {
-        console.log('credentials ->', credentials)
+        console.log('Autorize!!!')
         if (!credentials.email || !credentials.password) {
           return null
         }
@@ -69,14 +67,13 @@ export const authOptions = {
   },
   callbacks: {
     async session({ session }) {
-      console.log('callBack Session ->', session)
       // const sessionUser = await User.findOne({ email: session.user.email })
 
       // session.user.id = sessionUser._id
 
       return session
     },
-    async signIn({ profile }) {
+    async signIn(signParameter) {
       try {
         // if (!profile) return false
 
@@ -94,14 +91,13 @@ export const authOptions = {
 
         return true
       } catch (error) {
-        console.log(error)
+        console.error(error)
 
         return false
       }
     },
   },
-  secret: process.env.SECRET,
-  // debug: process.env.NODE_ENV === 'development'
+  secret: process.env.NEXTAUTH_SECRET,
 }
 
 const handler = NextAuth(authOptions)

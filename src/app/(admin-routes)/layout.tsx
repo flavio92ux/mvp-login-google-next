@@ -1,8 +1,8 @@
-import { getServerSession } from "next-auth";
-import { ReactNode } from "react";
-import { authOptions } from "../api/auth/[...nextauth]/route";
-import { redirect } from "next/navigation";
-import Provider from "../context/Provider";
+import { getServerSession } from 'next-auth'
+import { ReactNode } from 'react'
+import { authOptions } from '../api/auth/[...nextauth]/route'
+import { redirect } from 'next/navigation'
+import Provider from '../context/Provider'
 
 export const metadata = {
   title: 'Next.js',
@@ -10,17 +10,17 @@ export const metadata = {
 }
 
 interface PrivateLayoutProps {
-	children: ReactNode
+  children: ReactNode
 }
 
-export default async function PrivateLayout({ children }: PrivateLayoutProps){
-	const session = await getServerSession(authOptions as any)
+export default async function PrivateLayout({ children }: PrivateLayoutProps) {
+  const session = await getServerSession(authOptions as any)
 
-	console.log('Session layout ->', session)
+	console.log('session ->', session)
 
-	if (!session) {
-		redirect('/')
-	}
+  if (!session) {
+    redirect('/')
+  }
 
-	return <>{children}</>
+  return <>{children}</>
 }

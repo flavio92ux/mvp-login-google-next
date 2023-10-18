@@ -19,7 +19,7 @@ export default function LoginPage() {
       redirect: false,
     })
 
-    router.push('/admin')
+    router.replace('/admin')
   }
 
   return (

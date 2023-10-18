@@ -7,15 +7,15 @@ import { useRouter } from 'next/navigation'
 export default function Register() {
   const router = useRouter()
   const [data, setData] = useState({
-    name: 'string',
-    email: 'string',
-    password: 'string',
+    name: '',
+    email: '',
+    password: '',
   })
 
   const registerUser = async (e: any) => {
     e.preventDefault()
 
-    const response = await fetch('/api/auth/register', {
+    await fetch('/api/auth/register', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -23,8 +23,7 @@ export default function Register() {
       body: JSON.stringify(data)
     })
 
-    const userInfo = await response.json()
-    // router.push('/')
+    router.replace('/')
   }
 
   return (
