@@ -52,6 +52,8 @@ export const authOptions = {
           return null
         }
 
+        console.log('Fim do authorize!')
+
         return user
       }
     }),
@@ -76,8 +78,12 @@ export const authOptions = {
 
       return session
     },
-    async signIn({ profile }) {
-      console.log('CallBack profile', profile)
+    async signIn(teste) {
+
+      
+      console.log('CallBack signIn', teste)
+
+      const profile = teste.profile
       try {
         if (!profile) return false
 
