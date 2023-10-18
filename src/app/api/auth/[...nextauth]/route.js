@@ -25,9 +25,13 @@ export const authOptions = {
           label: 'Password',
           type: 'password',
         },
-        email: { label: 'Email', type: 'email' }
+        email: {
+          label: 'Email',
+          type: 'email'
+        }
       },
       async authorize(credentials) {
+        console.log('credentials ->', credentials)
         if (!credentials.email || !credentials.password) {
           return null
         }
@@ -65,6 +69,7 @@ export const authOptions = {
   },
   callbacks: {
     async session({ session }) {
+      console.log('callBack Session ->', session)
       const sessionUser = await User.findOne({ email: session.user.email })
 
       session.user.id = sessionUser._id
@@ -72,7 +77,10 @@ export const authOptions = {
       return session
     },
     async signIn({ profile }) {
+      console.log('CallBack profile', profile)
       try {
+        if (!profile) return false
+
         await connectDB()
 
         const userExist = await User.findOne({ email: profile.email })
