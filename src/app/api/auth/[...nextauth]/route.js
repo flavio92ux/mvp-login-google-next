@@ -31,7 +31,6 @@ export const authOptions = {
         }
       },
       async authorize(credentials) {
-        console.log('credentials ->', credentials)
         if (!credentials.email || !credentials.password) {
           return null
         }
@@ -52,8 +51,6 @@ export const authOptions = {
           return null
         }
 
-        console.log('Fim do authorize!')
-
         return user
       }
     }),
@@ -71,7 +68,6 @@ export const authOptions = {
   },
   callbacks: {
     async session({ session }) {
-      console.log('callBack Session ->', session)
       const sessionUser = await User.findOne({ email: session.user.email })
 
       session.user.id = sessionUser._id
@@ -79,10 +75,6 @@ export const authOptions = {
       return session
     },
     async signIn(teste) {
-
-      
-      console.log('CallBack signIn', teste)
-
       const profile = teste.profile
       try {
         if (!profile) return false
@@ -101,7 +93,7 @@ export const authOptions = {
 
         return true
       } catch (error) {
-        console.log(error)
+        console.error(error)
 
         return false
       }

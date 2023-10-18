@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation'
 export default function ButtonLogout() {
 	const { data } = useSession()
 
-  console.log('session ->', data)
+  console.error('session ->', data)
 
 	const router = useRouter()
 
