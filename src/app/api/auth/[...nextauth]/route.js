@@ -52,8 +52,6 @@ export const authOptions = {
           return null
         }
 
-        console.log('Fim do authorize!')
-
         return user
       }
     }),
@@ -72,32 +70,27 @@ export const authOptions = {
   callbacks: {
     async session({ session }) {
       console.log('callBack Session ->', session)
-      const sessionUser = await User.findOne({ email: session.user.email })
+      // const sessionUser = await User.findOne({ email: session.user.email })
 
-      session.user.id = sessionUser._id
+      // session.user.id = sessionUser._id
 
       return session
     },
-    async signIn(teste) {
-
-      
-      console.log('CallBack signIn', teste)
-
-      const profile = teste.profile
+    async signIn({ profile }) {
       try {
-        if (!profile) return false
+        // if (!profile) return false
 
-        await connectDB()
+        // await connectDB()
 
-        const userExist = await User.findOne({ email: profile.email })
+        // const userExist = await User.findOne({ email: profile.email })
 
-        if (!userExist) {
-          await User.create({
-            email: profile.email,
-            name: profile.name,
-            image: profile.picture,
-          })
-        }
+        // if (!userExist) {
+        //   await User.create({
+        //     email: profile.email,
+        //     name: profile.name,
+        //     image: profile.picture,
+        //   })
+        // }
 
         return true
       } catch (error) {
