@@ -2,6 +2,7 @@ import { getServerSession } from "next-auth";
 import { ReactNode } from "react";
 import { authOptions } from "../api/auth/[...nextauth]/route";
 import { redirect } from "next/navigation";
+import Provider from "../context/Provider";
 
 export const metadata = {
   title: 'Next.js',
@@ -13,15 +14,11 @@ interface PrivateLayoutProps {
 }
 
 export default async function PrivateLayout({ children }: PrivateLayoutProps){
-	const session = await getServerSession(authOptions)
+	const session = await getServerSession(authOptions as any)
 
 	if (!session) {
 		redirect('/')
 	}
 
-	return (
-    <html lang="en">
-      <body>{children}</body>
-    </html>
-  )
+	return <>{children}</>
 }
